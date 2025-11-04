@@ -1,26 +1,60 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { LineChart, Line, BarChart, Bar, AreaChart, Area, RadarChart, Radar, PolarGrid, PolarAngleAxis, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
+import { BarChart, Bar, AreaChart, Area, RadarChart, Radar, PolarGrid, PolarAngleAxis, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 import { Mail, Linkedin, Github, ExternalLink, ChevronDown, Menu, X, Code, Database, BarChart3, Award, Briefcase, GraduationCap, FileText, TrendingUp, Activity, Zap, BookOpen, Trophy } from 'lucide-react';
 
 const portfolioData = {
   name: "Samyuktha Kapoor",
   title: "Data Analyst | Data Engineer | Business Analyst",
-  tagline: "Transforming data into actionable insights",
   location: "Boston, MA",
   email: "rajeshkapoor.s@northeastern.edu",
-  phone: "+1 (857) 867-1929",
   links: {
     linkedin: "https://www.linkedin.com/in/samyukthakapoor/",
-    github: "https://github.com/samyukthakapoor",
-    portfolio: "https://samyukthakapoor.com"
+    github: "https://github.com/SamyukthaKapoor",
+    portfolio: "https://samyukthakapoor.github.io"
   }
 };
 
 const skills = [
-  { category: "Languages", items: ["Python", "SQL", "R", "HTML/CSS"], level: 90 },
-  { category: "BI Tools", items: ["Power BI", "Tableau", "Looker", "Excel"], level: 95 },
-  { category: "Cloud & Data", items: ["AWS", "GCP", "PostgreSQL", "MongoDB"], level: 85 },
-  { category: "MLOps", items: ["Apache Airflow", "Docker", "Kubernetes", "ML"], level: 80 }
+  { 
+    category: "Languages", 
+    items: [
+      { name: "Python", icon: "🐍" },
+      { name: "SQL", icon: "🗄️" },
+      { name: "R", icon: "📊" },
+      { name: "HTML/CSS", icon: "🎨" }
+    ], 
+    level: 90 
+  },
+  { 
+    category: "BI Tools", 
+    items: [
+      { name: "Power BI", icon: "📈" },
+      { name: "Tableau", icon: "📉" },
+      { name: "Looker", icon: "👁️" },
+      { name: "Excel", icon: "📊" }
+    ], 
+    level: 95 
+  },
+  { 
+    category: "Cloud & Data", 
+    items: [
+      { name: "AWS", icon: "☁️" },
+      { name: "GCP", icon: "🌩️" },
+      { name: "PostgreSQL", icon: "🐘" },
+      { name: "MongoDB", icon: "🍃" }
+    ], 
+    level: 85 
+  },
+  { 
+    category: "MLOps", 
+    items: [
+      { name: "Apache Airflow", icon: "🌊" },
+      { name: "Docker", icon: "🐳" },
+      { name: "Kubernetes", icon: "⚙️" },
+      { name: "ML", icon: "🤖" }
+    ], 
+    level: 80 
+  }
 ];
 
 const projects = [
@@ -29,7 +63,9 @@ const projects = [
     description: "ML pipeline using Apache Airflow for timestamp-grounded Q&A on audiobooks. Reduced audio navigation time by 75%.",
     tech: ["Apache Airflow", "Python", "RAG", "NLP"],
     impact: "75% time reduction",
-    github: "https://github.com/samyukthakapoor/audioseek",
+    link: "https://github.com/SamyukthaKapoor/AudioSeek",
+    linkText: "View Code",
+    isGithub: true,
     image: "/project-images/audioseek.png",
     color: "from-purple-400 to-pink-400"
   },
@@ -38,7 +74,9 @@ const projects = [
     description: "End-to-end data warehouse with Talend ETL pipelines analyzing compensation trends and attrition, identifying $50K optimization opportunities.",
     tech: ["Talend", "PostgreSQL", "Tableau"],
     impact: "$50K savings identified",
-    github: "https://github.com/samyukthakapoor/payroll-warehouse",
+    link: "https://github.com/SamyukthaKapoor/Payroll-Management-System",
+    linkText: "View Code",
+    isGithub: true,
     image: "/project-images/payroll.png",
     color: "from-blue-400 to-cyan-400"
   },
@@ -47,7 +85,9 @@ const projects = [
     description: "Scalable ETL pipeline on AWS analyzing 500+ videos with automated transformations. Increased view duration by 18%.",
     tech: ["AWS", "Lambda", "Glue", "Tableau"],
     impact: "18% engagement increase",
-    github: "https://github.com/samyukthakapoor/youtube-pipeline",
+    link: "https://github.com/SamyukthaKapoor/YouTube-Insight-Hub",
+    linkText: "View Code",
+    isGithub: true,
     image: "/project-images/youtube.png",
     color: "from-red-400 to-orange-400"
   },
@@ -56,7 +96,9 @@ const projects = [
     description: "Churn prediction model using SVM and gradient boosting with regression analysis and random forests for data quality assurance.",
     tech: ["Python", "SVM", "Random Forest", "Data Mining"],
     impact: "Optimized accuracy",
-    github: "https://github.com/samyukthakapoor/churn-prediction",
+    link: "https://github.com/SamyukthaKapoor/Predictive-churn-Management",
+    linkText: "View Code",
+    isGithub: true,
     image: "/project-images/churn.png",
     color: "from-emerald-400 to-teal-400"
   },
@@ -65,7 +107,9 @@ const projects = [
     description: "Database design with SQL and NoSQL implementation for cloud kitchen environment, enabling flexible queries and analytics.",
     tech: ["SQL", "NoSQL", "Database Design"],
     impact: "Flexible data management",
-    github: "https://github.com/samyukthakapoor/cloud-kitchen",
+    link: "https://github.com/SamyukthaKapoor/Cloud-Kitchen-Data-Management",
+    linkText: "View Code",
+    isGithub: true,
     image: "/project-images/cloud-kitchen.png",
     color: "from-yellow-400 to-orange-400"
   },
@@ -74,16 +118,20 @@ const projects = [
     description: "Interactive Power BI dashboard for powerplants with AI model to assess environmental impact and enhance sustainability insights.",
     tech: ["Power BI", "Python", "AI/ML"],
     impact: "Enhanced sustainability",
-    github: "https://github.com/samyukthakapoor/sustainability-viz",
+    link: "https://github.com/SamyukthaKapoor/Sustainable-Energy-Health-Visualizer",
+    linkText: "View Code",
+    isGithub: true,
     image: "/project-images/sustainability.png",
     color: "from-green-400 to-emerald-400"
   },
   {
-    title: "MassDOT Data Storytelling",
+    title: "MBTA Data Storytelling",
     description: "Data stories revealing transportation planning operations, supporting data-driven decision making with interactive user stories.",
     tech: ["Data Visualization", "Storytelling"],
     impact: "Actionable insights",
-    github: "https://github.com/samyukthakapoor/massdot-stories",
+    link: "https://sites.google.com/view/ie6700group9/home",
+    linkText: "View Dashboard",
+    isGithub: false,
     image: "/project-images/massdot.png",
     color: "from-indigo-400 to-purple-400"
   },
@@ -92,9 +140,22 @@ const projects = [
     description: "Tableau dashboard with advanced filters analyzing 3,000+ listings to uncover pricing trends and neighborhood dynamics.",
     tech: ["Tableau", "Python", "Data Analysis"],
     impact: "15% revenue potential",
-    github: "https://github.com/samyukthakapoor/airbnb-dashboard",
+    link: "https://public.tableau.com/app/profile/samyuktha.kapoor/viz/BostonAirbnbDashboard_17036223994450/Dashboard1?publish=yes",
+    linkText: "View Dashboard",
+    isGithub: false,
     image: "/project-images/airbnb.png",
     color: "from-pink-400 to-rose-400"
+  },
+  {
+    title: "Medical Utility Segregation",
+    description: "Two-stage CNN model using MobileNetV2 for classifying medical waste into categories (radioactive, sharp, chemical, general) to improve hospital waste management.",
+    tech: ["Python", "CNN", "MobileNetV2", "Streamlit", "Transfer Learning"],
+    impact: "Effective waste segregation",
+    link: "https://github.com/SamyukthaKapoor/medical-waste-segregation",
+    linkText: "View Code",
+    isGithub: true,
+    image: "/project-images/medicalwaste.png",
+    color: "from-teal-400 to-green-400"
   }
 ];
 
@@ -217,7 +278,6 @@ const projectMetrics = [
   { name: 'Efficiency', value: 60 }, { name: 'ROI', value: 85 }
 ];
 
-// CREATIVE ELEMENT 1: Animated Particle Network Background
 const ParticleNetwork = () => {
   const canvasRef = useRef(null);
   
@@ -270,7 +330,6 @@ const ParticleNetwork = () => {
         particle.draw();
       });
       
-      // Draw connections
       for (let i = 0; i < particles.length; i++) {
         for (let j = i + 1; j < particles.length; j++) {
           const dx = particles[i].x - particles[j].x;
@@ -305,7 +364,6 @@ const ParticleNetwork = () => {
   return <canvas ref={canvasRef} className="absolute inset-0" />;
 };
 
-// CREATIVE ELEMENT 2: Typing Animation Hook
 const useTypingEffect = (text, speed = 50) => {
   const [displayText, setDisplayText] = useState('');
   
@@ -326,7 +384,6 @@ const useTypingEffect = (text, speed = 50) => {
   return displayText;
 };
 
-// CREATIVE ELEMENT 3: Scroll Reveal Animation
 const useScrollReveal = () => {
   const [isVisible, setIsVisible] = useState(false);
   const ref = useRef(null);
@@ -341,13 +398,14 @@ const useScrollReveal = () => {
       { threshold: 0.1 }
     );
     
-    if (ref.current) {
-      observer.observe(ref.current);
+    const currentRef = ref.current;
+    if (currentRef) {
+      observer.observe(currentRef);
     }
     
     return () => {
-      if (ref.current) {
-        observer.unobserve(ref.current);
+      if (currentRef) {
+        observer.unobserve(currentRef);
       }
     };
   }, []);
@@ -377,7 +435,6 @@ export default function Portfolio() {
     card: 'bg-slate-800',
     text: 'text-slate-100',
     subtext: 'text-slate-400',
-    accent: 'text-blue-400',
     border: 'border-slate-700',
     hover: 'hover:bg-slate-700'
   };
@@ -391,7 +448,6 @@ export default function Portfolio() {
 
   return (
     <div className={`min-h-screen ${theme.bg} ${theme.text} transition-colors duration-300 relative overflow-hidden`}>
-      {/* Animated Particle Network Background */}
       <div className="fixed inset-0 z-0 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950">
         <ParticleNetwork />
       </div>
@@ -449,23 +505,31 @@ export default function Portfolio() {
         <div className="max-w-7xl mx-auto">
           <div className="grid lg:grid-cols-2 gap-12 items-start">
             <div>
-              <div className="flex items-center space-x-4 mb-6">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-4 sm:space-y-0 sm:space-x-6 mb-6">
                 <div className="relative">
-                  <div className="w-40 h-40 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 p-1 animate-pulse">
+                  <div className="w-48 h-48 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 p-1 animate-pulse">
                     <img 
                       src="/profile.jpg" 
                       alt="Samyuktha Kapoor"
                       className="w-full h-full rounded-full object-cover border-4 border-slate-900"
                       onError={(e) => {
                         e.target.style.display = 'none';
-                        e.target.parentElement.innerHTML = '<div class="w-full h-full rounded-full bg-gradient-to-br from-blue-900 to-purple-900 flex items-center justify-center text-4xl font-bold text-blue-400">SK</div>';
+                        e.target.parentElement.innerHTML = '<div class="w-full h-full rounded-full bg-gradient-to-br from-blue-900 to-purple-900 flex items-center justify-center text-5xl font-bold text-blue-400">SK</div>';
                       }}
                     />
                   </div>
-                  <div className="absolute -bottom-2 -right-2 w-8 h-8 bg-green-500 rounded-full border-4 border-slate-900 animate-pulse"></div>
+                  <div className="absolute -bottom-2 -right-2 w-10 h-10 bg-green-500 rounded-full border-4 border-slate-900 animate-pulse"></div>
                 </div>
-                <div className="inline-block px-5 py-2.5 bg-blue-500/10 text-blue-400 rounded-full text-base font-medium animate-pulse">
-                  Available for opportunities
+                <div className="flex flex-col space-y-2">
+                  <div className="inline-block px-5 py-2.5 bg-blue-500/10 text-blue-400 rounded-full text-base font-medium animate-pulse">
+                    Available for Full Time Opportunities
+                  </div>
+                  <div className="flex items-center space-x-2 text-slate-400">
+                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
+                    </svg>
+                    <span className="text-sm">Boston, MA</span>
+                  </div>
                 </div>
               </div>
               <h1 className="text-5xl md:text-6xl font-bold mb-4 bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
@@ -474,8 +538,7 @@ export default function Portfolio() {
               <h2 className="text-2xl md:text-3xl font-semibold mb-6 text-slate-300">
                 {portfolioData.title}
               </h2>
-              {/* Typing Animation */}
-              <p className={`text-lg ${theme.subtext} mb-2 leading-relaxed min-h-[6rem]`}>
+              <p className={`text-lg ${theme.subtext} mb-2 leading-relaxed min-h-[6rem] text-justify`}>
                 {typedText}<span className="animate-pulse">|</span>
               </p>
               <p className={`text-lg ${theme.subtext} mb-2 leading-relaxed`}>
@@ -493,13 +556,13 @@ export default function Portfolio() {
                   <span>Get in Touch</span>
                 </a>
                 <a 
-                  href="/resume.pdf"
+                  href="https://drive.google.com/file/d/1iJqshjeIOwJwluz0jQuBVwgRnlD556L1/view?usp=sharing"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-6 py-3 border-2 border-blue-500 text-blue-400 hover:bg-blue-500/10 rounded-lg transition-all flex items-center space-x-2 hover:scale-105 transform"
+                  className="px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white rounded-lg transition-all flex items-center space-x-2 hover:scale-105 transform shadow-lg"
                 >
                   <FileText className="w-4 h-4" />
-                  <span>View Resume</span>
+                  <span>Download Resume</span>
                 </a>
               </div>
               <div className="flex space-x-4 mt-8">
@@ -529,7 +592,7 @@ export default function Portfolio() {
                     <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
                     <XAxis dataKey="month" stroke="#94a3b8" style={{fontSize: '12px'}} />
                     <YAxis stroke="#94a3b8" style={{fontSize: '12px'}} />
-                    <Tooltip contentStyle={{ backgroundColor: '#1e293b', border: '1px solid #334155', borderRadius: '8px', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.3)', color: '#e2e8f0' }} />
+                    <Tooltip contentStyle={{ backgroundColor: '#1e293b', border: '1px solid #334155', borderRadius: '8px', color: '#e2e8f0' }} />
                     <Area type="monotone" dataKey="efficiency" stroke="#3b82f6" fillOpacity={1} fill="url(#colorEfficiency)" />
                   </AreaChart>
                 </ResponsiveContainer>
@@ -559,14 +622,13 @@ export default function Portfolio() {
         </div>
       </section>
 
-      {/* About, Experience, Projects, etc. sections with scroll reveal */}
-      <ScrollRevealSection id="about" theme={theme} />
-      <ExperienceSection id="experience" theme={theme} experience={experience} />
-      <ProjectsSection id="projects" theme={theme} projects={projects} />
-      <PublicationsSection id="publications" theme={theme} publications={publications} />
-      <SkillsSection id="skills" theme={theme} skills={skills} skillsRadarData={skillsRadarData} />
-      <EducationSection id="education" theme={theme} education={education} />
-      <ContactSection id="contact" theme={theme} portfolioData={portfolioData} />
+      <AboutSection theme={theme} />
+      <ExperienceSection theme={theme} experience={experience} />
+      <ProjectsSection theme={theme} projects={projects} />
+      <PublicationsSection theme={theme} publications={publications} />
+      <SkillsSection theme={theme} skills={skills} skillsRadarData={skillsRadarData} />
+      <EducationSection theme={theme} education={education} />
+      <ContactSection theme={theme} portfolioData={portfolioData} />
 
       <footer className={`py-8 border-t ${theme.border} bg-slate-900/50`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -580,7 +642,6 @@ export default function Portfolio() {
       <button
         onClick={() => scrollToSection('home')}
         className="fixed bottom-8 right-8 p-4 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white rounded-full shadow-lg transition-all opacity-80 hover:opacity-100 z-50 hover:scale-110 transform"
-        aria-label="Scroll to top"
       >
         <ChevronDown className="w-6 h-6 rotate-180" />
       </button>
@@ -589,48 +650,74 @@ export default function Portfolio() {
   );
 }
 
-// Component for scroll-reveal animation on About section
-function ScrollRevealSection({ id, theme }) {
+function AboutSection({ theme }) {
   const [ref, isVisible] = useScrollReveal();
   
   return (
-    <section ref={ref} id={id} className={`py-20 px-4 sm:px-6 lg:px-8 bg-slate-900/50 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+    <section ref={ref} id="about" className={`py-20 px-4 sm:px-6 lg:px-8 bg-slate-900/50 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
       <div className="max-w-7xl mx-auto">
         <h2 className="text-4xl font-bold mb-12 text-center bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">About Me</h2>
         
         <div className="grid lg:grid-cols-3 gap-8 mb-12">
           <div className="lg:col-span-2">
             <div className={`${theme.card} p-8 rounded-2xl border ${theme.border} shadow-lg hover:shadow-2xl transition-all`}>
-              <p className="text-lg text-slate-300 leading-relaxed mb-6">
+              <p className="text-lg text-slate-300 leading-relaxed mb-6 text-justify">
                 I'm currently wrapping up my Master's in Data Analytics Engineering at Northeastern, and honestly, it's been quite the ride. What started as curiosity about patterns in numbers has turned into a full-blown obsession with making data tell better stories.
               </p>
-              <p className="text-lg text-slate-300 leading-relaxed mb-6">
+              <p className="text-lg text-slate-300 leading-relaxed mb-6 text-justify">
                 At MassCEC, I got to work on clean energy projects, building dashboards that actually helped people make real funding decisions. Before that, at IIT, I worked on breast cancer diagnostics using deep learning (which ended up becoming a published paper, still pretty surreal). The best part? Seeing how data can genuinely improve healthcare outcomes and sustainability efforts.
               </p>
-              <p className="text-lg text-slate-300 leading-relaxed">
+              <p className="text-lg text-slate-300 leading-relaxed mb-6 text-justify">
                 Outside of the data world, I'm that person who spends way too much time perfecting matcha foam art and documenting it on Instagram. I'm also part of the baking community at NEU, where we stress-bake during finals week (highly recommend). Life's all about balance, right? Data analysis by day, creative experiments by night.
               </p>
             </div>
           </div>
           
           <div className="grid grid-cols-2 gap-4">
-            {[
-              { icon: Code, label: "Coding Life", color: "blue" },
-              { icon: TrendingUp, label: "Clean Energy", color: "green" },
-              { icon: Award, label: "NEU Life", color: "purple" },
-              { icon: Activity, label: "Matcha & More", color: "pink" }
-            ].map((item, idx) => (
-              <div key={idx} className={`${theme.card} rounded-xl border ${theme.border} p-4 flex items-center justify-center h-32 hover:scale-105 transform transition-all hover:shadow-lg`}>
-                <div className="text-center">
-                  <item.icon className={`w-12 h-12 text-${item.color}-400 mx-auto mb-2`} />
-                  <p className="text-xs text-slate-400">{item.label}</p>
-                </div>
-              </div>
-            ))}
+            <div className={`${theme.card} rounded-xl border ${theme.border} overflow-hidden h-48 hover:scale-105 transform transition-all hover:shadow-xl`}>
+              <img 
+                src="/about-images/workspace.jpg" 
+                alt="At work"
+                className="w-full h-full object-cover"
+                onError={(e) => {
+                  e.target.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="200" height="200"%3E%3Crect fill="%231e293b" width="200" height="200"/%3E%3Ctext x="50%25" y="50%25" font-size="16" fill="%2364748b" text-anchor="middle" dy=".3em"%3EWorkspace%3C/text%3E%3C/svg%3E';
+                }}
+              />
+            </div>
+            <div className={`${theme.card} rounded-xl border ${theme.border} overflow-hidden h-48 hover:scale-105 transform transition-all hover:shadow-xl`}>
+              <img 
+                src="/about-images/matcha.jpg" 
+                alt="Matcha art"
+                className="w-full h-full object-cover"
+                onError={(e) => {
+                  e.target.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="200" height="200"%3E%3Crect fill="%231e293b" width="200" height="200"/%3E%3Ctext x="50%25" y="50%25" font-size="16" fill="%2364748b" text-anchor="middle" dy=".3em"%3EMatcha%3C/text%3E%3C/svg%3E';
+                }}
+              />
+            </div>
+            <div className={`${theme.card} rounded-xl border ${theme.border} overflow-hidden h-48 hover:scale-105 transform transition-all hover:shadow-xl`}>
+              <img 
+                src="/about-images/northeastern.jpg" 
+                alt="Northeastern campus"
+                className="w-full h-full object-cover"
+                onError={(e) => {
+                  e.target.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="200" height="200"%3E%3Crect fill="%231e293b" width="200" height="200"/%3E%3Ctext x="50%25" y="50%25" font-size="16" fill="%2364748b" text-anchor="middle" dy=".3em"%3ENEU Life%3C/text%3E%3C/svg%3E';
+                }}
+              />
+            </div>
+            <div className={`${theme.card} rounded-xl border ${theme.border} overflow-hidden h-48 hover:scale-105 transform transition-all hover:shadow-xl`}>
+              <img 
+                src="/about-images/dashboard.jpg" 
+                alt="Data work"
+                className="w-full h-full object-cover"
+                onError={(e) => {
+                  e.target.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="200" height="200"%3E%3Crect fill="%231e293b" width="200" height="200"/%3E%3Ctext x="50%25" y="50%25" font-size="16" fill="%2364748b" text-anchor="middle" dy=".3em"%3EDashboards%3C/text%3E%3C/svg%3E';
+                }}
+              />
+            </div>
           </div>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
           {[
             { value: "2+", label: "Years Experience", icon: Briefcase, gradient: "from-blue-400 to-blue-600" },
             { value: "15+", label: "Projects Completed", icon: Code, gradient: "from-purple-400 to-purple-600" },
@@ -644,66 +731,49 @@ function ScrollRevealSection({ id, theme }) {
             </div>
           ))}
         </div>
-
-        <div className="grid md:grid-cols-2 gap-8">
-          <div className={`${theme.card} p-6 rounded-xl border ${theme.border} shadow-lg hover:border-blue-500 hover:shadow-2xl transition-all`}>
-            <h3 className="text-xl font-semibold mb-4 text-center text-slate-200">Technical Expertise</h3>
-            <ResponsiveContainer width="100%" height={300}>
-              <RadarChart data={skillsRadarData}>
-                <PolarGrid stroke="#334155" />
-                <PolarAngleAxis dataKey="skill" stroke="#94a3b8" />
-                <Radar name="Skills" dataKey="value" stroke="#3b82f6" fill="#3b82f6" fillOpacity={0.3} />
-                <Tooltip contentStyle={{ backgroundColor: '#1e293b', border: '1px solid #334155', borderRadius: '8px', color: '#e2e8f0' }} />
-              </RadarChart>
-            </ResponsiveContainer>
-          </div>
-
-          <div className="grid grid-cols-1 gap-6">
-            <div className={`${theme.card} p-6 rounded-xl border ${theme.border} hover:shadow-lg hover:border-blue-500 hover:scale-105 transform transition-all`}>
-              <Database className="w-12 h-12 text-blue-400 mb-4" />
-              <h3 className="text-xl font-semibold mb-2 text-slate-200">Data Engineering</h3>
-              <p className={theme.subtext}>Building robust ETL pipelines and data warehouses with SQL, Python, and cloud platforms to drive business insights</p>
-            </div>
-            <div className={`${theme.card} p-6 rounded-xl border ${theme.border} hover:shadow-lg hover:border-purple-500 hover:scale-105 transform transition-all`}>
-              <BarChart3 className="w-12 h-12 text-purple-400 mb-4" />
-              <h3 className="text-xl font-semibold mb-2 text-slate-200">Business Intelligence</h3>
-              <p className={theme.subtext}>Creating impactful visualizations with Tableau and Power BI that translate complex data into strategic decisions</p>
-            </div>
-          </div>
-        </div>
       </div>
     </section>
   );
 }
 
-// Simplified component functions for other sections (keeping file size manageable)
-function ExperienceSection({ id, theme, experience }) {
+function ExperienceSection({ theme, experience }) {
   const [ref, isVisible] = useScrollReveal();
   return (
-    <section ref={ref} id={id} className={`py-20 px-4 sm:px-6 lg:px-8 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+    <section ref={ref} id="experience" className={`py-20 px-4 sm:px-6 lg:px-8 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
       <div className="max-w-7xl mx-auto">
-        <div className="flex items-center space-x-3 mb-12">
-          <Briefcase className="w-8 h-8 text-blue-400" />
-          <h2 className="text-4xl font-bold">Experience</h2>
+        <div className="flex items-center justify-center space-x-3 mb-4">
+          <Briefcase className="w-10 h-10 text-blue-400" />
+          <h2 className="text-4xl font-bold bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">Experience</h2>
         </div>
-        <div className="space-y-6">
+        <p className="text-center text-slate-400 mb-12">Professional journey in data analytics and engineering</p>
+        
+        <div className="space-y-8">
           {experience.map((exp, idx) => (
-            <div key={idx} className={`${theme.card} p-6 rounded-xl border-l-4 border-blue-600 shadow-lg hover:shadow-2xl hover:border-l-8 hover:scale-105 transform transition-all`}>
-              <div className="flex flex-col md:flex-row md:justify-between md:items-start mb-4">
-                <div>
-                  <h3 className="text-2xl font-semibold text-blue-400">{exp.role}</h3>
-                  <p className="text-lg text-slate-300">{exp.company}</p>
+            <div key={idx} className={`${theme.card} p-8 rounded-2xl border-2 ${theme.border} shadow-xl hover:shadow-2xl hover:border-blue-500 hover:scale-105 transform transition-all relative overflow-hidden group`}>
+              <div className="absolute left-0 top-0 bottom-0 w-2 bg-gradient-to-b from-blue-500 via-cyan-500 to-purple-500"></div>
+              <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-blue-500/10 to-cyan-500/10 rounded-bl-full opacity-0 group-hover:opacity-100 transition-opacity"></div>
+              
+              <div className="relative z-10 ml-6">
+                <div className="flex flex-col md:flex-row md:justify-between md:items-start mb-6">
+                  <div>
+                    <h3 className="text-2xl font-bold text-transparent bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text mb-2">{exp.role}</h3>
+                    <p className="text-xl text-slate-200 font-semibold">{exp.company}</p>
+                  </div>
+                  <span className="mt-2 md:mt-0 bg-gradient-to-r from-blue-500/20 to-cyan-500/20 px-4 py-2 rounded-full border border-blue-500/30">
+                    <span className="text-sm text-blue-300 font-semibold">{exp.period}</span>
+                  </span>
                 </div>
-                <span className={`${theme.subtext} text-sm mt-2 md:mt-0 bg-blue-500/10 px-3 py-1 rounded-full`}>{exp.period}</span>
+                <ul className="space-y-4">
+                  {exp.achievements.map((achievement, i) => (
+                    <li key={i} className="flex items-start group/item">
+                      <div className="flex-shrink-0 w-6 h-6 rounded-full bg-gradient-to-r from-blue-500 to-cyan-500 flex items-center justify-center mr-3 mt-0.5 group-hover/item:scale-125 transition-transform">
+                        <Zap className="w-3 h-3 text-white" />
+                      </div>
+                      <span className="text-slate-300 leading-relaxed">{achievement}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
-              <ul className="space-y-3">
-                {exp.achievements.map((achievement, i) => (
-                  <li key={i} className={`flex items-start ${theme.subtext}`}>
-                    <Zap className="w-4 h-4 text-blue-400 mr-2 mt-1 flex-shrink-0" />
-                    <span>{achievement}</span>
-                  </li>
-                ))}
-              </ul>
             </div>
           ))}
         </div>
@@ -712,56 +782,30 @@ function ExperienceSection({ id, theme, experience }) {
   );
 }
 
-// CREATIVE ELEMENT 4: 3D Tilt Effect on Project Cards
-function ProjectsSection({ id, theme, projects }) {
+function ProjectsSection({ theme, projects }) {
   const [ref, isVisible] = useScrollReveal();
   
-  const handleMouseMove = (e, cardRef) => {
-    if (!cardRef) return;
-    const card = cardRef;
-    const rect = card.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    const centerX = rect.width / 2;
-    const centerY = rect.height / 2;
-    const rotateX = (y - centerY) / 10;
-    const rotateY = (centerX - x) / 10;
-    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.05, 1.05, 1.05)`;
-  };
-  
-  const handleMouseLeave = (cardRef) => {
-    if (!cardRef) return;
-    cardRef.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
-  };
-  
   return (
-    <section ref={ref} id={id} className={`py-20 px-4 sm:px-6 lg:px-8 bg-slate-900/30 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+    <section ref={ref} id="projects" className={`py-20 px-4 sm:px-6 lg:px-8 bg-slate-900/30 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
       <div className="max-w-7xl mx-auto">
         <h2 className="text-4xl font-bold mb-12 text-center bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">Featured Projects</h2>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {projects.map((project, idx) => (
             <div 
               key={idx} 
-              ref={el => {
-                if (el) {
-                  el.addEventListener('mousemove', (e) => handleMouseMove(e, el));
-                  el.addEventListener('mouseleave', () => handleMouseLeave(el));
-                }
-              }}
-              className={`${theme.card} rounded-xl border ${theme.border} shadow-xl group overflow-hidden transition-all duration-200`}
-              style={{ transformStyle: 'preserve-3d' }}
+              className={`${theme.card} rounded-xl border ${theme.border} shadow-xl hover:shadow-2xl group overflow-hidden transition-all hover:scale-105 transform`}
             >
               <div className={`relative h-48 bg-gradient-to-br ${project.color} overflow-hidden`}>
                 {project.image ? (
                   <img src={project.image} alt={project.title} className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
-                    onError={(e) => { e.target.style.display = 'none'; e.target.nextElementSibling.style.display = 'flex'; }} />
+                    onError={(e) => { e.target.style.display = 'none'; }} />
                 ) : null}
-                <div className="absolute inset-0 flex items-center justify-center" style={{display: project.image ? 'none' : 'flex'}}>
+                <div className="absolute inset-0 flex items-center justify-center">
                   <Code className="w-20 h-20 text-white/30" />
                 </div>
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
-                <a href={project.github} target="_blank" rel="noopener noreferrer" className="absolute top-4 right-4 p-2 bg-slate-900/90 hover:bg-slate-800 rounded-full transition-all shadow-lg">
-                  <Github className="w-5 h-5 text-slate-200" />
+                <a href={project.link} target="_blank" rel="noopener noreferrer" className="absolute top-4 right-4 p-2 bg-slate-900/90 hover:bg-slate-800 rounded-full transition-all shadow-lg">
+                  {project.isGithub ? <Github className="w-5 h-5 text-slate-200" /> : <ExternalLink className="w-5 h-5 text-slate-200" />}
                 </a>
                 <div className="absolute bottom-4 left-4 right-4">
                   <h3 className="text-xl font-semibold text-white">{project.title}</h3>
@@ -776,8 +820,8 @@ function ProjectsSection({ id, theme, projects }) {
                 </div>
                 <div className="pt-4 border-t border-slate-700 flex items-center justify-between">
                   <span className="text-xs font-semibold text-blue-400">🎯 {project.impact}</span>
-                  <a href={project.github} target="_blank" rel="noopener noreferrer" className="text-xs text-slate-400 hover:text-blue-400 transition-colors flex items-center space-x-1">
-                    <span>View Code</span>
+                  <a href={project.link} target="_blank" rel="noopener noreferrer" className="text-xs text-slate-400 hover:text-blue-400 transition-colors flex items-center space-x-1">
+                    <span>{project.linkText}</span>
                     <ExternalLink className="w-3 h-3" />
                   </a>
                 </div>
@@ -790,34 +834,37 @@ function ProjectsSection({ id, theme, projects }) {
   );
 }
 
-function PublicationsSection({ id, theme, publications }) {
+function PublicationsSection({ theme, publications }) {
   const [ref, isVisible] = useScrollReveal();
   return (
-    <section ref={ref} id={id} className={`py-20 px-4 sm:px-6 lg:px-8 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+    <section ref={ref} id="publications" className={`py-20 px-4 sm:px-6 lg:px-8 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
       <div className="max-w-7xl mx-auto">
-        <div className="flex items-center space-x-3 mb-12">
-          <BookOpen className="w-8 h-8 text-purple-400" />
-          <h2 className="text-4xl font-bold">Publications & Research</h2>
+        <div className="flex items-center justify-center space-x-3 mb-4">
+          <BookOpen className="w-10 h-10 text-purple-400" />
+          <h2 className="text-4xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">Publications & Research</h2>
         </div>
-        <div className="space-y-6">
+        <p className="text-center text-slate-400 mb-12">Peer-reviewed research contributions in AI and healthcare</p>
+        
+        <div className="grid md:grid-cols-2 gap-8">
           {publications.map((pub, idx) => (
-            <div key={idx} className={`${theme.card} p-6 rounded-xl border-l-4 border-purple-600 shadow-lg hover:shadow-2xl hover:scale-105 transform transition-all`}>
-              <div className="flex items-start justify-between mb-3">
-                <div className="flex-1">
-                  <div className="flex items-center space-x-2 mb-2">
-                    <Trophy className="w-5 h-5 text-purple-400" />
-                    <span className="px-3 py-1 bg-purple-500/10 text-purple-400 rounded-full text-xs font-medium">{pub.type}</span>
-                  </div>
-                  <h3 className="text-xl font-semibold text-purple-400 mb-2">{pub.title}</h3>
-                  <p className="text-sm text-slate-300 mb-1">{pub.venue} • {pub.date}</p>
-                  <p className="text-xs text-slate-400 mb-3">{pub.authors}</p>
-                  <p className={`${theme.subtext} text-sm mb-3`}>{pub.description}</p>
+            <div key={idx} className={`${theme.card} p-8 rounded-2xl border-2 ${theme.border} shadow-xl hover:shadow-2xl hover:border-purple-500 hover:scale-105 transform transition-all relative overflow-hidden group`}>
+              <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-purple-500/10 to-pink-500/10 rounded-bl-full opacity-0 group-hover:opacity-100 transition-opacity"></div>
+              
+              <div className="relative z-10">
+                <div className="flex items-center space-x-2 mb-4">
+                  <Trophy className="w-6 h-6 text-purple-400" />
+                  <span className="px-4 py-1.5 bg-gradient-to-r from-purple-500/20 to-pink-500/20 text-purple-300 rounded-full text-sm font-semibold border border-purple-500/30">{pub.type}</span>
                 </div>
+                <h3 className="text-2xl font-bold text-transparent bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text mb-3">{pub.title}</h3>
+                <p className="text-sm text-slate-300 mb-2 font-medium">{pub.venue}</p>
+                <p className="text-xs text-slate-500 mb-3">{pub.date} • {pub.authors}</p>
+                <p className={`${theme.subtext} text-sm mb-6 leading-relaxed`}>{pub.description}</p>
+                <a href={pub.link} target="_blank" rel="noopener noreferrer" className="inline-flex items-center space-x-2 px-4 py-2 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white rounded-lg transition-all text-sm font-medium hover:scale-105 transform shadow-lg">
+                  <BookOpen className="w-4 h-4" />
+                  <span>Read Publication</span>
+                  <ExternalLink className="w-4 h-4" />
+                </a>
               </div>
-              <a href={pub.link} target="_blank" rel="noopener noreferrer" className="inline-flex items-center space-x-2 text-sm text-purple-400 hover:text-purple-300 transition-colors">
-                <span>Read Publication</span>
-                <ExternalLink className="w-4 h-4" />
-              </a>
             </div>
           ))}
         </div>
@@ -826,100 +873,176 @@ function PublicationsSection({ id, theme, publications }) {
   );
 }
 
-function SkillsSection({ id, theme, skills }) {
+function SkillsSection({ theme, skills, skillsRadarData }) {
   const [ref, isVisible] = useScrollReveal();
   return (
-    <section ref={ref} id={id} className={`py-20 px-4 sm:px-6 lg:px-8 bg-slate-900/30 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+    <section ref={ref} id="skills" className={`py-20 px-4 sm:px-6 lg:px-8 bg-slate-900/30 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
       <div className="max-w-7xl mx-auto">
-        <h2 className="text-4xl font-bold mb-4 text-center bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">Skills & Technologies</h2>
+        <h2 className="text-4xl font-bold mb-4 text-center bg-gradient-to-r from-blue-400 via-cyan-400 to-purple-400 bg-clip-text text-transparent">Skills & Technologies</h2>
         <p className="text-center text-slate-400 mb-12">Proficiency levels based on project experience and professional application</p>
-        <div className="grid md:grid-cols-2 gap-8">
+        
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
           {skills.map((skill, idx) => (
-            <div key={idx} className={`${theme.card} p-6 rounded-xl border ${theme.border} shadow-lg hover:shadow-xl hover:border-blue-500 hover:scale-105 transform transition-all`}>
-              <h3 className="text-xl font-semibold mb-4 text-blue-400">{skill.category}</h3>
-              <div className="space-y-4">
-                <div className="flex flex-wrap gap-2 mb-3">
+            <div key={idx} className={`${theme.card} p-6 rounded-2xl border ${theme.border} shadow-lg hover:shadow-2xl hover:border-blue-500 hover:scale-105 transform transition-all relative overflow-hidden group`}>
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+              
+              <div className="relative z-10">
+                <h3 className="text-lg font-bold mb-4 text-transparent bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text">{skill.category}</h3>
+                <div className="space-y-3 mb-4">
                   {skill.items.map((item, i) => (
-                    <span key={i} className={`px-3 py-1 bg-blue-500/10 text-blue-400 rounded-lg text-sm font-medium hover:bg-blue-500/20 transition-all`}>{item}</span>
+                    <div key={i} className="flex items-center justify-between group/skill">
+                      <div className="flex items-center space-x-2">
+                        <span className="text-xl group-hover/skill:scale-125 transition-transform">{item.icon}</span>
+                        <span className="text-sm text-slate-300 font-medium">{item.name}</span>
+                      </div>
+                      <div className="flex space-x-1">
+                        {[...Array(5)].map((_, dotIdx) => (
+                          <div 
+                            key={dotIdx} 
+                            className={`w-2 h-2 rounded-full transition-all ${dotIdx < Math.floor(skill.level / 20) ? 'bg-gradient-to-r from-blue-400 to-purple-400 group-hover/skill:scale-125' : 'bg-slate-600'}`}
+                          ></div>
+                        ))}
+                      </div>
+                    </div>
                   ))}
                 </div>
-                <div className="w-full bg-slate-700 rounded-full h-2 overflow-hidden">
-                  <div className="bg-gradient-to-r from-blue-500 to-purple-500 h-2 rounded-full transition-all duration-1000" style={{ width: `${skill.level}%` }} />
+                <div className="w-full bg-slate-700 rounded-full h-2 overflow-hidden mb-2">
+                  <div 
+                    className="bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 h-2 rounded-full transition-all duration-1000" 
+                    style={{ width: isVisible ? `${skill.level}%` : '0%' }} 
+                  />
                 </div>
-                <p className="text-xs text-slate-500 text-right">{skill.level}% proficiency</p>
+                <p className="text-xs text-blue-400 font-semibold text-right">{skill.level}%</p>
               </div>
             </div>
           ))}
+        </div>
+
+        <div className="grid md:grid-cols-2 gap-8">
+          <div className={`${theme.card} p-6 rounded-2xl border-2 ${theme.border} shadow-xl hover:shadow-2xl hover:border-cyan-500 transition-all`}>
+            <h3 className="text-xl font-semibold mb-4 text-center text-transparent bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text">Technical Proficiency Radar</h3>
+            <ResponsiveContainer width="100%" height={300}>
+              <RadarChart data={skillsRadarData}>
+                <PolarGrid stroke="#334155" />
+                <PolarAngleAxis dataKey="skill" stroke="#94a3b8" style={{fontSize: '12px', fontWeight: '600'}} />
+                <Radar name="Skills" dataKey="value" stroke="#06b6d4" fill="#06b6d4" fillOpacity={0.4} strokeWidth={2} />
+                <Tooltip contentStyle={{ backgroundColor: '#1e293b', border: '1px solid #334155', borderRadius: '8px', color: '#e2e8f0' }} />
+              </RadarChart>
+            </ResponsiveContainer>
+          </div>
+
+          <div className="grid grid-cols-1 gap-6">
+            <div className={`${theme.card} p-6 rounded-xl border ${theme.border} hover:shadow-xl hover:border-blue-500 hover:scale-105 transform transition-all relative overflow-hidden group`}>
+              <div className="absolute top-0 right-0 w-20 h-20 bg-blue-500/10 rounded-bl-full opacity-0 group-hover:opacity-100 transition-opacity"></div>
+              <Database className="w-12 h-12 text-blue-400 mb-4" />
+              <h3 className="text-xl font-semibold mb-2 text-slate-200">Data Engineering</h3>
+              <p className={theme.subtext}>Building robust ETL pipelines and data warehouses with SQL, Python, and cloud platforms to drive business insights</p>
+            </div>
+            <div className={`${theme.card} p-6 rounded-xl border ${theme.border} hover:shadow-xl hover:border-purple-500 hover:scale-105 transform transition-all relative overflow-hidden group`}>
+              <div className="absolute top-0 right-0 w-20 h-20 bg-purple-500/10 rounded-bl-full opacity-0 group-hover:opacity-100 transition-opacity"></div>
+              <BarChart3 className="w-12 h-12 text-purple-400 mb-4" />
+              <h3 className="text-xl font-semibold mb-2 text-slate-200">Business Intelligence</h3>
+              <p className={theme.subtext}>Creating impactful visualizations with Tableau and Power BI that translate complex data into strategic decisions</p>
+            </div>
+          </div>
         </div>
       </div>
     </section>
   );
 }
 
-function EducationSection({ id, theme, education }) {
+function EducationSection({ theme, education }) {
   const [ref, isVisible] = useScrollReveal();
   return (
-    <section ref={ref} id={id} className={`py-20 px-4 sm:px-6 lg:px-8 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+    <section ref={ref} id="education" className={`py-20 px-4 sm:px-6 lg:px-8 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
       <div className="max-w-7xl mx-auto">
-        <div className="flex items-center space-x-3 mb-12">
-          <GraduationCap className="w-8 h-8 text-purple-400" />
-          <h2 className="text-4xl font-bold">Education</h2>
+        <div className="flex items-center justify-center space-x-3 mb-4">
+          <GraduationCap className="w-10 h-10 text-purple-400" />
+          <h2 className="text-4xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">Education</h2>
         </div>
-        <div className="space-y-6">
-          {education.map((edu, idx) => (
-            <div key={idx} className={`${theme.card} p-6 rounded-xl border-l-4 border-purple-500 shadow-lg hover:shadow-xl hover:border-l-8 hover:scale-105 transform transition-all`}>
-              <div className="flex flex-col md:flex-row md:justify-between md:items-start mb-4">
-                <div className="flex-1">
-                  <h3 className="text-xl font-semibold text-purple-400">{edu.degree}</h3>
-                  <p className="text-lg text-slate-300">{edu.school}</p>
-                </div>
-                <div className="text-right mt-2 md:mt-0">
-                  <p className={`${theme.subtext} bg-purple-500/10 px-3 py-1 rounded-full inline-block mb-2`}>{edu.period}</p>
-                  <p className="text-purple-400 font-semibold">GPA: {edu.gpa}</p>
-                </div>
-              </div>
-              <div className="space-y-2">
-                {edu.achievements.map((achievement, i) => (
-                  <div key={i} className="flex items-start">
-                    <Award className="w-4 h-4 text-purple-400 mr-2 mt-1 flex-shrink-0" />
-                    <p className={`text-sm ${theme.subtext}`}>{achievement}</p>
+        <p className="text-center text-slate-400 mb-12">Academic journey and achievements</p>
+        
+        <div className="relative">
+          <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-gradient-to-b from-purple-500 via-blue-500 to-cyan-500 hidden md:block"></div>
+          
+          <div className="space-y-8">
+            {education.map((edu, idx) => (
+              <div key={idx} className="relative">
+                <div className="absolute left-6 top-8 w-5 h-5 rounded-full bg-gradient-to-r from-purple-500 to-blue-500 border-4 border-slate-900 hidden md:block animate-pulse"></div>
+                
+                <div className={`md:ml-20 ${theme.card} p-8 rounded-2xl border-2 ${theme.border} shadow-xl hover:shadow-2xl hover:border-purple-500 hover:scale-105 transform transition-all relative overflow-hidden group`}>
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-purple-500/10 to-blue-500/10 rounded-bl-full opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                  
+                  <div className="relative z-10">
+                    <div className="flex flex-col md:flex-row md:justify-between md:items-start mb-4">
+                      <div className="flex-1">
+                        <h3 className="text-2xl font-bold text-transparent bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text mb-2">{edu.degree}</h3>
+                        <p className="text-xl text-slate-200 font-semibold mb-3">{edu.school}</p>
+                      </div>
+                      <div className="text-right">
+                        <p className="bg-gradient-to-r from-purple-500/20 to-blue-500/20 px-4 py-2 rounded-full inline-block mb-2 border border-purple-500/30">
+                          <span className="text-sm text-purple-300 font-semibold">{edu.period}</span>
+                        </p>
+                        <p className="text-purple-400 font-bold text-lg">GPA: {edu.gpa}</p>
+                      </div>
+                    </div>
+                    <div className="space-y-3 mt-6">
+                      {edu.achievements.map((achievement, i) => (
+                        <div key={i} className="flex items-start group/item">
+                          <Award className="w-5 h-5 text-purple-400 mr-3 mt-0.5 flex-shrink-0 group-hover/item:scale-125 transition-transform" />
+                          <p className="text-sm text-slate-300 leading-relaxed">{achievement}</p>
+                        </div>
+                      ))}
+                    </div>
                   </div>
-                ))}
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
     </section>
   );
 }
 
-function ContactSection({ id, theme, portfolioData }) {
+function ContactSection({ theme, portfolioData }) {
   const [ref, isVisible] = useScrollReveal();
   return (
-    <section ref={ref} id={id} className={`py-20 px-4 sm:px-6 lg:px-8 bg-slate-900/30 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-      <div className="max-w-3xl mx-auto text-center">
-        <h2 className="text-4xl font-bold mb-6 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">Let's Connect</h2>
-        <p className={`${theme.subtext} text-lg mb-8`}>
-          I'm always interested in hearing about new opportunities, projects, or just chatting about data!
-        </p>
-        <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
-          <a href={`mailto:${portfolioData.email}`} className="px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white rounded-lg transition-all flex items-center justify-center space-x-2 shadow-lg hover:scale-105 transform">
-            <Mail className="w-5 h-5" />
-            <span>Email Me</span>
-          </a>
-          <a href={portfolioData.links.linkedin} target="_blank" rel="noopener noreferrer" className="px-8 py-4 border-2 border-blue-500 text-blue-400 hover:bg-blue-500/10 rounded-lg transition-all flex items-center justify-center space-x-2 hover:scale-105 transform">
-            <Linkedin className="w-5 h-5" />
-            <span>LinkedIn</span>
-          </a>
-        </div>
-        <div className="flex justify-center space-x-6">
-          <a href={portfolioData.links.github} target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-purple-400 transition-all hover:scale-125 transform">
-            <Github className="w-8 h-8" />
-          </a>
-          <a href={`mailto:${portfolioData.email}`} className="text-slate-400 hover:text-blue-400 transition-all hover:scale-125 transform">
-            <Mail className="w-8 h-8" />
-          </a>
+    <section ref={ref} id="contact" className={`py-20 px-4 sm:px-6 lg:px-8 bg-slate-900/30 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+      <div className="max-w-4xl mx-auto">
+        <div className={`${theme.card} p-12 rounded-3xl border-2 ${theme.border} shadow-2xl hover:shadow-blue-500/10 transition-all relative overflow-hidden`}>
+          <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-purple-500/5 to-pink-500/5 animate-pulse"></div>
+          
+          <div className="relative z-10 text-center">
+            <div className="inline-block p-4 bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-full mb-6">
+              <Mail className="w-12 h-12 text-blue-400" />
+            </div>
+            <h2 className="text-5xl font-bold mb-4 bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">Let's Connect</h2>
+            <p className={`${theme.subtext} text-lg mb-8 max-w-2xl mx-auto`}>
+              I'm always interested in hearing about new opportunities, projects, or just chatting about data!
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
+              <a href={`mailto:${portfolioData.email}`} className="px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white rounded-xl transition-all flex items-center justify-center space-x-2 shadow-lg hover:scale-110 transform font-semibold">
+                <Mail className="w-5 h-5" />
+                <span>Email Me</span>
+              </a>
+              <a href={portfolioData.links.linkedin} target="_blank" rel="noopener noreferrer" className="px-8 py-4 border-2 border-blue-500 text-blue-400 hover:bg-blue-500/10 rounded-xl transition-all flex items-center justify-center space-x-2 hover:scale-110 transform font-semibold">
+                <Linkedin className="w-5 h-5" />
+                <span>LinkedIn</span>
+              </a>
+            </div>
+            <div className="flex justify-center space-x-8 pt-6 border-t border-slate-700">
+              <a href={portfolioData.links.github} target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-purple-400 transition-all hover:scale-150 transform">
+                <Github className="w-8 h-8" />
+              </a>
+              <a href={`mailto:${portfolioData.email}`} className="text-slate-400 hover:text-blue-400 transition-all hover:scale-150 transform">
+                <Mail className="w-8 h-8" />
+              </a>
+              <a href={portfolioData.links.linkedin} target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-pink-400 transition-all hover:scale-150 transform">
+                <Linkedin className="w-8 h-8" />
+              </a>
+            </div>
+          </div>
         </div>
       </div>
     </section>
