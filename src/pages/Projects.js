@@ -11,7 +11,7 @@ const Projects = () => {
                     <span className="font-serif-personal lowercase italic font-medium text-cyan-electric not-italic">Repository</span>.
                 </h2>
                 <p className="text-xl text-slate-400 font-medium leading-relaxed max-w-xl">
-                    Deep dives into data lifecycles, ML diagnostics, and scalable infrastructure. Each project is a solution to a real-world friction point.
+                    Deep dives into data lifecycles, ML diagnostics, and scalable infrastructure. Each project is a solution to a real world friction point.
                 </p>
             </div>
 

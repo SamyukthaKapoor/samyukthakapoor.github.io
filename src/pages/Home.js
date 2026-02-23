@@ -24,7 +24,7 @@ const Home = () => {
 
                     <div className="max-w-2xl space-y-6">
                         <p className="text-xl text-slate-400 leading-relaxed font-medium">
-                            A recent graduate from <span className="text-white">Northeastern University</span>, I’m currently a Data Science Research Assistant focused on developing AI solutions for clinical diagnostics. My work bridges the gap between complex data architecture and real-world impact.
+                            A recent graduate from <span className="text-white">Northeastern University</span>, I’m currently a Data Science Research Assistant focused on developing AI solutions for clinical diagnostics. My work bridges the gap between complex data architecture and real world impact.
                         </p>
 
                         <div className="flex flex-wrap gap-x-8 gap-y-3 pt-2">
@@ -86,7 +86,7 @@ const Home = () => {
                         meets <span className="font-serif-personal lowercase italic font-medium text-cyan-electric not-italic">clarity</span>.
                     </h3>
                     <p className="text-2xl text-slate-400 font-medium leading-relaxed italic">
-                        "I see data architecture as the art of making the complex feel intuitive. Large-scale systems should process information so seamlessly that the complexity disappears. Data is at its best when it serves a clear, actionable purpose."
+                        "I see data architecture as the art of making the complex feel intuitive. Large scale systems should process information so seamlessly that the complexity disappears. Data is at its best when it serves a clear, actionable purpose."
                     </p>
                 </div>
 

@@ -12,7 +12,7 @@ const Experience = () => {
                         <span className="font-serif-personal lowercase italic font-medium text-cyan-electric not-italic">Trajectory</span>.
                     </h2>
                     <p className="text-xl text-slate-400 font-medium leading-relaxed max-w-xl">
-                        A precision-engineered progression across distributed data systems and architectural research, focused on scaling intelligence from local development to cloud production.
+                        A precision engineered progression across distributed data systems and architectural research, focused on scaling intelligence from local development to cloud production.
                     </p>
                 </div>
 
@@ -53,7 +53,7 @@ const Experience = () => {
                     </svg>
                     <div className="absolute inset-x-0 -bottom-8 flex justify-between px-4 text-[10px] font-black text-slate-600 uppercase tracking-widest">
                         <span>Systems_Growth</span>
-                        <span>2021—Present</span>
+                        <span>2021 to Present</span>
                     </div>
                 </div>
             </div>
