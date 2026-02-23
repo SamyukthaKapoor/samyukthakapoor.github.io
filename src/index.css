@@ -3,7 +3,8 @@
 @tailwind utilities;
 
 :root {
-  --bg-primary: #020617;
+  --bg-primary: #0f172a;
+  /* Slate 900 - Lighter than base 020617 */
   --text-primary: #e2e8f0;
   --text-secondary: #94a3b8;
   --accent-cyan: #06b6d4;
@@ -52,10 +53,16 @@
   background-color: var(--accent-cyan);
 }
 
-h1,
-h2,
+h1 {
+  @apply text-5xl md:text-7xl tracking-tighter;
+}
+
+h2 {
+  @apply text-2xl md:text-3xl tracking-tight font-serif-personal italic;
+}
+
 h3 {
-  @apply tracking-tighter;
+  @apply text-4xl md:text-5xl tracking-tighter;
 }
 
 /* Custom Cursor (Sophisticated Circle) */
@@ -120,6 +127,31 @@ h3 {
 
 .animate-reveal {
   animation: reveal 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Profile Image Specifics */
+.profile-image-container {
+  @apply relative aspect-[4/5] rounded-[2.5rem] overflow-hidden;
+  max-width: 320px;
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 40px 80px -15px rgba(0, 0, 0, 0.4);
+}
+
+.profile-image {
+  @apply w-full h-full object-cover transition-all duration-1000;
+  filter: contrast(1.05) brightness(0.95);
+}
+
+.profile-image-container:hover .profile-image {
+  @apply scale-105;
+}
+
+.theme-soft .profile-image-container {
+  box-shadow: 0 30px 60px -12px rgba(15, 23, 42, 0.1);
+}
+
+.profile-image-overlay {
+  @apply absolute inset-0 bg-gradient-to-t from-black/20 to-transparent;
 }
 
 .delay-100 {
