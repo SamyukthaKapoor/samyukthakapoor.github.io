@@ -30,7 +30,7 @@ const Home = () => {
                         <div className="flex flex-wrap gap-x-8 gap-y-3 pt-2">
                             {[
                                 { label: "Interests", value: "Data Storytelling, Sustainable Tech, Mentoring" },
-                                { label: "Status", value: "Available for full-time Data Engineering roles" }
+                                { label: "Status", value: "Available for full time Data Engineering roles" }
                             ].map((info, i) => (
                                 <div key={i} className="flex flex-col">
                                     <span className="text-[10px] font-black uppercase tracking-widest text-slate-500">{info.label}</span>

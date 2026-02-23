@@ -147,7 +147,7 @@ export const experience = [
         logoType: "energy",
         impactToken: "$M+_ALLOC",
         achievements: [
-            "Built automated Power BI dashboards with DAX frameworks, elimination reporting bottlenecks and enabling real-time monitoring.",
+            "Built automated Power BI dashboards with DAX frameworks, elimination reporting bottlenecks and enabling real time monitoring.",
             "Designed impact analytics infrastructure that informed million dollar reallocation decisions toward renewable energy initiatives.",
             "Automated SQL based data quality checks and ETL workflows, reducing errors by 30%.",
             "Standardized data collection processes for renewable energy tracking across project sites."
