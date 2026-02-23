@@ -21,7 +21,7 @@ const Home = () => {
                         <span className="text-cyan-electric">Intelligence</span>.
                     </h1>
 
-                    <p className="max-w-2xl text-xl text-slate-400 leading-relaxed font-medium">
+                    <p className="max-w-2xl text-xl text-slate-400 leading-relaxed font-medium text-justify-custom">
                         {portfolioData.bio}
                     </p>
 
@@ -67,7 +67,7 @@ const Home = () => {
                                 <h4 className="text-3xl md:text-5xl font-serif-personal italic text-white/90 leading-[1.1] lowercase">
                                     {story.title}
                                 </h4>
-                                <p className="text-lg text-slate-400 leading-relaxed font-normal text-justify">
+                                <p className="text-lg text-slate-400 leading-relaxed font-normal text-justify-custom">
                                     {story.caption}
                                 </p>
                                 <div className="pt-4 flex items-center space-x-4 opacity-30">

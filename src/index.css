@@ -30,9 +30,12 @@
     color: var(--text-primary);
     @apply antialiased overflow-x-hidden transition-colors duration-500;
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    text-align: justify;
-    text-justify: inter-word;
   }
+}
+
+.text-justify-custom {
+  text-align: justify;
+  text-justify: inter-word;
 }
 
 /* Sophisticated Typography Mix */
